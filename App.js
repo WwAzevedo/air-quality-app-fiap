@@ -1,9 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
-import * as Location from 'expo-location'
+import * as Location from 'expo-location';
 
 export default class App extends React.Component {
-  
   
   // Constructor init
   constructor(props) {
@@ -23,9 +22,11 @@ export default class App extends React.Component {
       //User Latitude and Longitude
       latitude: "",
       longitude: "",
+      locality_info: "",
 
       // BrezzoMeter API KEY
-      API_KEY: "67d9c460a3a44ac092c1d0def7d300c5",
+      BREZZO_API_KEY: "67d9c460a3a44ac092c1d0def7d300c5",
+      GOOGLE_MAPS_API_KEY: "AIzaSyCYV2qYhugmFxDEBn0O4syaJEl9omSenxI",
     }
   }
 
@@ -33,7 +34,7 @@ export default class App extends React.Component {
 
   // Method to get Air Quality Area
   getAirCondition() {
-    return fetch('https://api.breezometer.com/air-quality/v2/current-conditions?lat='+this.state.latitude+'&lon='+this.state.longitude+'&key='+this.state.API_KEY+'&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true')
+    return fetch('https://api.breezometer.com/air-quality/v2/current-conditions?lat='+this.state.latitude+'&lon='+this.state.longitude+'&key='+this.state.BREZZO_API_KEY+'&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true')
     .then((response) => response.json())
       .then(result => {
 
@@ -62,8 +63,11 @@ export default class App extends React.Component {
         });
   }
 
+  // Get User Location
   getGeoLocation(){
     Location.installWebGeolocationPolyfill()
+
+    //Get Latitude and Longitude 
     return navigator.geolocation.getCurrentPosition(
 
       //Will give you the current location
@@ -76,6 +80,20 @@ export default class App extends React.Component {
         //getting the Latitude from the location json
         var currentLatitude =
           JSON.stringify(position.coords.latitude);
+        
+          fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude='+currentLatitude+'&longitude='+currentLongitude+'&localityLanguage=pt-br')
+          .then((response) => response.json())
+          .then((result) => {
+
+              //User Locality Info
+              var locality_info = result['locality']+" - "+result['principalSubdivision']+", "+result['countryName']
+
+              //Set State
+              this.setState({
+                locality_info: locality_info,
+              })
+
+          })
 
         //Set State
         this.setState({
@@ -97,9 +115,10 @@ export default class App extends React.Component {
         <View style={[styles.container, styles.title]}>
 
           <TouchableOpacity onPress={()=> this.getAirCondition()}>
-            <Text>VERIFICAR QUALIDADE DO AR</Text>
+            <Text>VERIFICAR QUALIDADE DO AR (Botão)</Text>
           </TouchableOpacity>
           <View style={styles.container1}>
+            <Text>Localização: {this.state.locality_info}</Text>
             <Text>Indice AQI: {this.state.air_quality_number}</Text>
             <Text>Classificação: {this.state.category}</Text>
             <Text>Recomendação: {this.state.health_recommendations}</Text>
@@ -124,7 +143,5 @@ export default class App extends React.Component {
     },    
     container1: {
       backgroundColor: '#fff',
-
-
     },
   });
