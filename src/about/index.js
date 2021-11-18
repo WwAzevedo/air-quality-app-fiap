@@ -50,7 +50,7 @@ const About = ({ navigation }) => (
       </Label>
       {
         team.map(({ name, rm }) => (
-          <Label variant="description" color="#30B9C4" strong>
+          <Label key={name} variant="description" color="#30B9C4" strong>
             {name} - RM: {rm}
           </Label>
         ))
