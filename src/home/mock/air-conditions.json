@@ -1,0 +1,54 @@
+{
+    "metadata": {
+        "timestamp": "2021-11-18T00:21:33Z",
+        "location": {
+            "country": "Brazil"
+        },
+        "indexes": {
+            "bra_saopaulo": {
+                "pollutants": [
+                    "co",
+                    "no2",
+                    "o3",
+                    "pm10",
+                    "pm25",
+                    "so2"
+                ]
+            }
+        }
+    },
+    "data": {
+        "datetime": "2021-11-18T00:00:00Z",
+        "data_available": true,
+        "indexes": {
+            "bra_saopaulo": {
+                "display_name": "AQI (BR)",
+                "aqi": 63,
+                "aqi_display": "63",
+                "color": "#FFFF00",
+                "category": "N2 \u2013 Moderate air quality",
+                "dominant_pollutant": "o3"
+            }
+        },
+        "pollutants": {
+            "o3": {
+                "display_name": "O3",
+                "full_name": "Ozone",
+                "concentration": {
+                    "value": 23.24,
+                    "units": "ppb"
+                }
+            }
+        },
+        "health_recommendations": {
+            "general_population": "Se você começar a sentir desconforto respiratório, como tosse ou dificuldades respiratórias, considere reduzir a intensidade de suas atividades ao ar livre. Tente limitar o tempo que você passa perto de estradas movimentadas, canteiros de obras, fogueiras e outras fontes de fumaça.",
+            "elderly": "Reduce the intensity of your outdoor activities. It is recommended to limit the time you are near busy roads, construction sites, open fires and other sources of smoke. Staying indoors with an activated air filtration system would be best for your long term health.",
+            "lung_diseases": "Reduce the intensity of your outdoor activities. Keep relevant medication(s) available and consult a doctor with any questions. It is recommended to limit the time you are near busy roads, open fires and other sources of smoke. In addition, consider reducing the time you spend near industrial emission stacks. Staying indoors with an activated air filtration system would be best for your long term health.",
+            "heart_diseases": "Reduce the intensity of your outdoor activities. Keep relevant medication(s) available and consult a doctor with any questions. It is recommended to limit the time you are near busy roads, construction sites, open fires and other sources of smoke. In addition, consider reducing the time you spend near industrial emission stacks. Staying indoors with an activated air filtration system would be best for your long term health.",
+            "active": "Reduce the intensity of your outdoor activities. It is recommended to limit the time you are near busy roads, construction sites, open fires and other sources of smoke. In addition, consider reducing the time you spend near industrial emission stacks. Staying indoors with an activated air filtration system would be best for your long term health.",
+            "pregnant_women": "To keep you and your baby healthy, reduce the intensity of your outdoor activities. It is recommended to limit the time you are near busy roads, construction sites, open fires and other sources of smoke. Staying indoors with an activated air filtration system would be best for your long term health.",
+            "children": "Reduce the intensity of your outdoor activities. It is recommended to limit the time you are near busy roads, construction sites, open fires and other sources of smoke. Staying indoors with an activated air filtration system would be best for your long term health."
+        }
+    },
+    "error": null
+}

@@ -1,0 +1,104 @@
+{
+    "latitude": -23.674333572387695,
+    "longitude": -46.7353401184082,
+    "lookupSource": "coordinates",
+    "plusCode": "588M87G7+7V",
+    "localityLanguageRequested": "pt-br",
+    "continent": "América do Sul",
+    "continentCode": "SA",
+    "countryName": "Brasil",
+    "countryCode": "BR",
+    "principalSubdivision": "São Paulo",
+    "principalSubdivisionCode": "BR-SP",
+    "city": "São Paulo",
+    "locality": "Jardim São Luís",
+    "postcode": "",
+    "localityInfo": {
+        "administrative": [
+            {
+                "order": 2,
+                "adminLevel": 2,
+                "name": "Brasil",
+                "description": "país na América do Sul",
+                "isoName": "Brazil",
+                "isoCode": "BR",
+                "wikidataId": "Q155",
+                "geonameId": 3469034
+            },
+            {
+                "order": 3,
+                "adminLevel": 3,
+                "name": "Região Sudeste do Brasil",
+                "description": "Região do Brasil",
+                "wikidataId": "Q1088815"
+            },
+            {
+                "order": 5,
+                "adminLevel": 4,
+                "name": "São Paulo",
+                "description": "unidade federativa do Brasil",
+                "isoName": "São Paulo",
+                "isoCode": "BR-SP",
+                "wikidataId": "Q175",
+                "geonameId": 3448433
+            },
+            {
+                "order": 7,
+                "adminLevel": 5,
+                "name": "Região Geográfica Intermediária de São Paulo",
+                "wikidataId": "Q48878425"
+            },
+            {
+                "order": 8,
+                "adminLevel": 6,
+                "name": "Região Metropolitana de São Paulo",
+                "description": "Grande São Paulo",
+                "wikidataId": "Q1415666"
+            },
+            {
+                "order": 9,
+                "adminLevel": 7,
+                "name": "Região Imediata de São Paulo"
+            },
+            {
+                "order": 10,
+                "adminLevel": 8,
+                "name": "São Paulo",
+                "description": "capital do Estado de São Paulo",
+                "wikidataId": "Q174",
+                "geonameId": 3448439
+            },
+            {
+                "order": 11,
+                "adminLevel": 9,
+                "name": "Jardim São Luís",
+                "description": "distrito da cidade de São Paulo",
+                "wikidataId": "Q10306135"
+            }
+        ],
+        "informative": [
+            {
+                "order": 1,
+                "name": "América do Sul",
+                "description": "continente",
+                "isoCode": "SA",
+                "wikidataId": "Q18",
+                "geonameId": 6255150
+            },
+            {
+                "order": 4,
+                "name": "Planalto Brasileiro",
+                "description": "extensive geographical region, covering most of the eastern, southern and central portions of Brazil",
+                "wikidataId": "Q118899",
+                "geonameId": 3466465
+            },
+            {
+                "order": 6,
+                "name": "Serra da Mantiquiera",
+                "description": "mountain in Brazil",
+                "wikidataId": "Q22071997",
+                "geonameId": 8435267
+            }
+        ]
+    }
+}
