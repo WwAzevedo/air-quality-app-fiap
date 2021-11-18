@@ -12,109 +12,109 @@ const Stack = createNativeStackNavigator();
 
 export default class App extends React.Component {
 
-  // Constructor init
-  constructor(props) {
-    super(props);
-    this.getGeoLocation() // Get User Location
+  // // Constructor init
+  // constructor(props) {
+  //   super(props);
+  //   this.getGeoLocation() // Get User Location
 
-    this.state = {
+  //   this.state = {
 
-      // Air Quality Info
-      air_quality_number: "",
-      health_recommendations: "",
-      category: "",
-      pollutants: "",
-      pollutants_full_name: "",
+  //     // Air Quality Info
+  //     air_quality_number: "",
+  //     health_recommendations: "",
+  //     category: "",
+  //     pollutants: "",
+  //     pollutants_full_name: "",
 
 
-      //User Latitude and Longitude
-      latitude: "",
-      longitude: "",
-      locality_info: "",
+  //     //User Latitude and Longitude
+  //     latitude: "",
+  //     longitude: "",
+  //     locality_info: "",
 
-      // BrezzoMeter API KEY
-      BREZZO_API_KEY: "67d9c460a3a44ac092c1d0def7d300c5",
-      GOOGLE_MAPS_API_KEY: "AIzaSyCYV2qYhugmFxDEBn0O4syaJEl9omSenxI",
-    }
-  }
+  //     // BrezzoMeter API KEY
+  //     BREZZO_API_KEY: "67d9c460a3a44ac092c1d0def7d300c5",
+  //     GOOGLE_MAPS_API_KEY: "AIzaSyCYV2qYhugmFxDEBn0O4syaJEl9omSenxI",
+  //   }
+  // }
 
-  // Methods
+  // // Methods
 
-  // Method to get Air Quality Area
-  getAirCondition() {
-    return fetch('https://api.breezometer.com/air-quality/v2/current-conditions?lat=' + this.state.latitude + '&lon=' + this.state.longitude + '&key=' + this.state.BREZZO_API_KEY + '&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true')
-      .then((response) => response.json())
-      .then(result => {
+  // // Method to get Air Quality Area
+  // getAirCondition() {
+  //   return fetch('https://api.breezometer.com/air-quality/v2/current-conditions?lat=' + this.state.latitude + '&lon=' + this.state.longitude + '&key=' + this.state.BREZZO_API_KEY + '&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true')
+  //     .then((response) => response.json())
+  //     .then(result => {
 
-        //Get variables items
-        var location_key = Object.keys(result['data']['indexes']) //Get location key
-        var pollutants_key = Object.keys(result['data']['pollutants'])
+  //       //Get variables items
+  //       var location_key = Object.keys(result['data']['indexes']) //Get location key
+  //       var pollutants_key = Object.keys(result['data']['pollutants'])
 
-        var air_quality_number = result['data']['indexes'][location_key]['aqi'] //Get Air Quality AQI Indice
-        var category = result['data']['indexes'][location_key]['category'] //Get Air Quality Indice description
-        var health_recommendations = result['data']['health_recommendations']['general_population'] // Get 'General Population' Health Recommendations
-        var pollutants = result['data']['pollutants'][pollutants_key]['display_name']
-        var pollutants_full_name = result['data']['pollutants'][pollutants_key]['full_name']
+  //       var air_quality_number = result['data']['indexes'][location_key]['aqi'] //Get Air Quality AQI Indice
+  //       var category = result['data']['indexes'][location_key]['category'] //Get Air Quality Indice description
+  //       var health_recommendations = result['data']['health_recommendations']['general_population'] // Get 'General Population' Health Recommendations
+  //       var pollutants = result['data']['pollutants'][pollutants_key]['display_name']
+  //       var pollutants_full_name = result['data']['pollutants'][pollutants_key]['full_name']
 
-        //Set State
-        this.setState({
-          air_quality_number: air_quality_number,
-          health_recommendations: health_recommendations,
-          category: category,
-          pollutants: pollutants,
-          pollutants_full_name: pollutants_full_name,
+  //       //Set State
+  //       this.setState({
+  //         air_quality_number: air_quality_number,
+  //         health_recommendations: health_recommendations,
+  //         category: category,
+  //         pollutants: pollutants,
+  //         pollutants_full_name: pollutants_full_name,
 
-        })
+  //       })
 
-      }).catch((error) => {
-        console.log(error)
-      });
-  }
+  //     }).catch((error) => {
+  //       console.log(error)
+  //     });
+  // }
 
-  // Get User Location
-  getGeoLocation() {
-    Location.installWebGeolocationPolyfill()
+  // // Get User Location
+  // getGeoLocation() {
+  //   Location.installWebGeolocationPolyfill()
 
-    //Get Latitude and Longitude 
-    return navigator.geolocation.getCurrentPosition(
+  //   //Get Latitude and Longitude 
+  //   return navigator.geolocation.getCurrentPosition(
 
-      //Will give you the current location
-      (position) => {
+  //     //Will give you the current location
+  //     (position) => {
 
-        //getting the Longitude from the location json
-        var currentLongitude =
-          JSON.stringify(position.coords.longitude);
+  //       //getting the Longitude from the location json
+  //       var currentLongitude =
+  //         JSON.stringify(position.coords.longitude);
 
-        //getting the Latitude from the location json
-        var currentLatitude =
-          JSON.stringify(position.coords.latitude);
+  //       //getting the Latitude from the location json
+  //       var currentLatitude =
+  //         JSON.stringify(position.coords.latitude);
 
-        fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + currentLatitude + '&longitude=' + currentLongitude + '&localityLanguage=pt-br')
-          .then((response) => response.json())
-          .then((result) => {
+  //       fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + currentLatitude + '&longitude=' + currentLongitude + '&localityLanguage=pt-br')
+  //         .then((response) => response.json())
+  //         .then((result) => {
 
-            //User Locality Info
-            var locality_info = result['locality'] + " - " + result['principalSubdivision'] + ", " + result['countryName']
+  //           //User Locality Info
+  //           var locality_info = result['locality'] + " - " + result['principalSubdivision'] + ", " + result['countryName']
 
-            //Set State
-            this.setState({
-              locality_info: locality_info,
-            })
+  //           //Set State
+  //           this.setState({
+  //             locality_info: locality_info,
+  //           })
 
-          })
+  //         })
 
-        //Set State
-        this.setState({
-          latitude: currentLatitude,
-          longitude: currentLongitude,
+  //       //Set State
+  //       this.setState({
+  //         latitude: currentLatitude,
+  //         longitude: currentLongitude,
 
-        })
+  //       })
 
-      }, (error) => alert(error.message), {
-      enableHighAccuracy: true, timeout: 20000, maximumAge: 1000
-    }
-    );
-  }
+  //     }, (error) => alert(error.message), {
+  //     enableHighAccuracy: true, timeout: 20000, maximumAge: 1000
+  //   }
+  //   );
+  // }
 
 
   // Screen Render
