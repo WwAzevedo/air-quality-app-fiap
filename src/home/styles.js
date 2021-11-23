@@ -7,6 +7,7 @@ export const Container = styled.View`
   display: flex;
   align-items: center;
   justify-content: center;
+  text-align: center;
 `;
 
 export const Moreinfo = styled.View`
@@ -35,4 +36,5 @@ export const Info = styled.View`
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
 `;
