@@ -92,7 +92,7 @@ const Home = ({ navigation }) => {
       health_recommendations,
       category,
       pollutants,
-      pollutants_full_name,
+      pollutants_full_name: pollutants_full_name.split(" ")[0],
       health_color
     })
   }
