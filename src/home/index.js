@@ -121,19 +121,19 @@ const Home = ({ navigation }) => {
         </Label>
 
         <ContainerInfo>
-          <Info style={{ gridArea: "temp" }} >
+          <Info >
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Temperatura{"\n"}
               {weather?.weather_condition}
             </Label>
           </Info>
-          <Info style={{ gridArea: "umi" }} >
+          <Info>
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Umidade do Ar{"\n"}
               {weather?.relative_humidity}
             </Label>
           </Info>
-          <Info style={{ gridArea: "pol" }}>
+          <Info>
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Principal Poluente{"\n"}
               {air?.pollutants} ({air?.pollutants_full_name})

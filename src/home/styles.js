@@ -25,12 +25,7 @@ export const ContainerInfo = styled.View`
   width: 100%;
   height: 50px;
   padding: 16px;
-  display: grid;
-  grid-template-areas: 
-    "temp umi"
-    "pol pol";
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 16px;
+  display: flex;
 `;
 
 export const Info = styled.View`
@@ -42,4 +37,5 @@ export const Info = styled.View`
   align-items: center;
   text-align: center;
   font-size: 10px;
+  margin-bottom: 8px;
 `;
