@@ -38,4 +38,5 @@ export const Info = styled.View`
   text-align: center;
   font-size: 10px;
   margin-bottom: 8px;
+  box-shadow: rgb(0 0 0 / 16%) 0px 4px 8px 0px;
 `;
