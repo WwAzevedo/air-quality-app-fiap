@@ -22,7 +22,7 @@ export const Moreinfo = styled.View`
 `;
 
 export const ContainerInfo = styled.View`
-  width: 100vw;
+  width: 100%;
   height: 50px;
   padding: 16px;
   display: grid;
