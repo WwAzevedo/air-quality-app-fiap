@@ -40,7 +40,7 @@ const About = ({ navigation }) => (
     <Container>
 
       <Label variant="description" color="#30B9C4" strong>
-        AirFresh App, application.
+        AirFresh App, aplicativo para descobrir como está a qualidade do ar e umidade da sua localização.
       </Label>
 
       <br />

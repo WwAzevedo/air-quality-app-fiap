@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from "react";
 import * as Location from "expo-location";
 import Icon from "react-native-vector-icons/FontAwesome5";
-
 import { Container, Moreinfo, Info, ContainerInfo } from "./styles";
-
 import { TouchableOpacity } from "react-native";
-
 import Label from "../shared/components/label";
-
 import TemplateBase from '../shared/templates/base';
 
 const infoImg = require("../../assets/info.svg");
@@ -89,11 +85,11 @@ const Home = ({ navigation }) => {
 
     setAir({
       air_quality_number,
-      health_recommendations,
+      health_recommendations: "Se você começar a sentir desconforto respiratório, como tosse ou dificuldades respiratórias, considere reduzir a intensidade de suas atividades ao ar livre. Tente limitar o tempo que você passa perto de estradas movimentadas, canteiros de obras, fogueiras e outras fontes de fumaça.",
       category,
       pollutants,
       pollutants_full_name: pollutants_full_name.split(" ")[0],
-      health_color
+      health_color: health_color == "FFFF00" ? "#FED900" : health_color
     })
   }
 
@@ -105,35 +101,34 @@ const Home = ({ navigation }) => {
       rightIcon={infoImg} >
       <Container>
         <TouchableOpacity>
-          <Label variant="paragraph" strong color={air?.health_color == "#FFFF00" ? "#FED900" : air?.health_color}>
+          <Label variant="paragraph" strong color="#000">
             <Icon name={"location-arrow"} fontSize={"18"} />{" "}
-
             {location?.locality_info}
           </Label>
         </TouchableOpacity>
 
-        <Label variant="header" extraStrong color={air?.health_color == "#FFFF00" ? "#FED900": air?.health_color}>
+        <Label variant="header" extraStrong color={air?.health_color}>
           {air?.air_quality_number}
         </Label>
 
-        <Label variant="title" strong color={air?.health_color == "#FFFF00" ? "#FED900" : air?.health_color}>
+        <Label variant="title" strong color={air?.health_color}>
           {air?.category}
         </Label>
 
         <ContainerInfo>
-          <Info >
+          <Info style={{ gridArea: "temp" }}>
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Temperatura{"\n"}
               {weather?.weather_condition}
             </Label>
           </Info>
-          <Info>
+          <Info style={{ gridArea: "um" }}>
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Umidade do Ar{"\n"}
               {weather?.relative_humidity}
             </Label>
           </Info>
-          <Info>
+          <Info style={{ gridArea: "pol" }}>
             <Label variant="paragraph" strong color={"#30B9C4"}>
               Principal Poluente{"\n"}
               {air?.pollutants} ({air?.pollutants_full_name})
@@ -145,7 +140,7 @@ const Home = ({ navigation }) => {
 
       <Moreinfo>
         <Label strong color="#FFF">
-          Recomendações para o clima: {air?.health_recommendations}
+          <strong>Recomendações para o clima:</strong> {air?.health_recommendations}
         </Label>
       </Moreinfo>
 

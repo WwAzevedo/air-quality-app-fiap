@@ -13,7 +13,7 @@ const Intro = ({ navigation }) => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('Home');
-    }, 2000);
+    }, 3000);
   }, [])
 
   return (

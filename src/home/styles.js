@@ -25,18 +25,24 @@ export const ContainerInfo = styled.View`
   width: 100%;
   height: 50px;
   padding: 16px;
-  display: flex;
+  display: grid;
+  grid-template-areas:
+    "temp um"
+    "pol pol";
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 100px 100px;
+  grid-gap: 8px;
+  
 `;
 
 export const Info = styled.View`
   background-color: white;
-  height: 70px;
+  height: auto;
   border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
   font-size: 10px;
-  margin-bottom: 8px;
-  box-shadow: rgb(0 0 0 / 16%) 0px 4px 8px 0px;
+  box-shadow: #ccc 1px 2px 8px;
 `;
