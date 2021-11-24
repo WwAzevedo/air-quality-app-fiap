@@ -22,16 +22,18 @@ export const Moreinfo = styled.View`
 export const ContainerInfo = styled.View`
   width: 100vw;
   height: 50px;
-  flex-direction: row;
-  display: flex;
+  padding: 16px;
+  display: grid;
+  grid-template-areas: 
+    "temp umi"
+    "pol pol";
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 16px;
 `;
 
 export const Info = styled.View`
   background-color: white;
-  width: 50px;
   height: 70px;
-  margin: 16px;
-  flex: 1;
   border-radius: 8px;
   display: flex;
   justify-content: center;

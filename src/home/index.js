@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Location from 'expo-location';
 
 import {
@@ -9,232 +9,154 @@ import {
 } from './styles';
 
 import {
-  Text,
   TouchableOpacity
 } from 'react-native';
 
 import Label from '../shared/components/label';
 
-import { useGeoLocation } from './api/geo-localization';
-import { getAirCondition } from './api/air-condition';
-
 import TemplateBase from '../shared/templates/base';
 
 const infoImg = require("../../assets/info.svg");
-import { useNavigation } from '@react-navigation/native';
 
-// const Home = ({ navigation }) => {
-//   const { city, locality } = useGeoLocation();
+const Home = ({ navigation }) => {
 
-//   const {
-//     air_quality_number,
-//     category,
-//     health_recommendations,
-//     pollutants,
-//     pollutants_full_name
-//   } = getAirCondition();
+  const [weather, setWeather] = useState();
+  const [air, setAir] = useState();
+  const [location, setLocation] = useState(null);
+  const KEY = "496bfcfb6ddd40ef831e29858c8ba7a9";
 
-export default class App extends React.Component {
+  useEffect(() => {
+    getGeoLocation();
+  }, []);
 
-    // Constructor init
-  constructor(props) {
-    super(props);
-
-    // Get User Location
-    this.getGeoLocation();
-    
-    this.state = {
-
-      // Air Quality Info
-      air_quality_number: "",
-      health_recommendations: "",
-      category: "",
-      pollutants: "",
-      pollutants_full_name: "",
-
-      // Weather Condition Info
-      weather_condition: "",
-      relative_humidity: "",
-
-      //User Latitude and Longitude
-      latitude: "",
-      longitude: "",
-      locality_info: "",
-
-      // BrezzoMeter API KEY
-      BREZZO_API_KEY: "496bfcfb6ddd40ef831e29858c8ba7a9",
-
-      // Health Color
-      health_color: "",
+  useEffect(() => {
+    if (location) {
+      getWeatherCondition();
+      getAirCondition();
     }
+  }, [location]);
 
+  const getGeoLocation = () => {
+    Location.installWebGeolocationPolyfill()
 
-  }
+    return navigator.geolocation.getCurrentPosition(
 
-  // Methods
+      async position => {
 
-    // Get User Location
-    getGeoLocation() {
-      Location.installWebGeolocationPolyfill()
-  
-      //Get Latitude and Longitude 
-      return navigator.geolocation.getCurrentPosition(
-  
-        //Will give you the current location
-        (position) => {
-  
-          //getting the Longitude from the location json
-          var currentLongitude =
-            JSON.stringify(position.coords.longitude);
-  
-          //getting the Latitude from the location json
-          var currentLatitude =
-            JSON.stringify(position.coords.latitude);
-  
-          fetch('https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=' + currentLatitude + '&longitude=' + currentLongitude + '&localityLanguage=pt-br')
-            .then((response) => response.json())
-            .then((result) => {
-  
-              //User Locality Info
-              var locality_info = result['locality'] + " - " + result['principalSubdivision'] + ", " + result['countryName']
-  
-              //Set State
-              this.setState({
-                locality_info: locality_info,
-              })
-  
-            })
-  
-          //Set State
-          this.setState({
-            latitude: currentLatitude,
-            longitude: currentLongitude,
-  
-          })
-  
-        }, (error) => alert(error.message), {
-        enableHighAccuracy: true, timeout: 20000, maximumAge: 1000
-      }
-      );
-    }
+        let longitude = JSON.stringify(position.coords.longitude);
 
-  // Method to get Air Quality Area
-  getAirCondition() {
-    this.getGeoLocation()
-    return fetch('https://api.breezometer.com/air-quality/v2/current-conditions?lat=' + this.state.latitude + '&lon=' + this.state.longitude + '&key=' + this.state.BREZZO_API_KEY + '&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true')
-      .then((response) => response.json())
-      .then(result => {
+        let latitude = JSON.stringify(position.coords.latitude);
 
-        //Get variables items
-        var location_key = Object.keys(result['data']['indexes']) //Get location key
-        var pollutants_key = Object.keys(result['data']['pollutants'])
+        let url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt-br`
 
-        var air_quality_number = result['data']['indexes'][location_key]['aqi'] //Get Air Quality AQI Indice
-        var category = result['data']['indexes'][location_key]['category'] //Get Air Quality Indice description
-        var health_recommendations = result['data']['health_recommendations']['general_population'] // Get 'General Population' Health Recommendations
-        var pollutants = result['data']['pollutants'][pollutants_key]['display_name']
-        var pollutants_full_name = result['data']['pollutants'][pollutants_key]['full_name']
-        var health_color = result['data']['indexes'][location_key]['color']
-
-        //Set State
-        this.setState({
-          air_quality_number: air_quality_number,
-          health_recommendations: health_recommendations,
-          category: category,
-          pollutants: pollutants,
-          pollutants_full_name: pollutants_full_name,
-          health_color: health_color,
-
-        })
-
-      }).catch((error) => {
-        console.log(error)
-      });
-  }
-
-    // Method to get Weather Conditions Area
-    getWeatherCondition() {
-      this.getGeoLocation()
-      return fetch('https://api.breezometer.com/weather/v1/current-conditions?lat=' + this.state.latitude + '&lon=' + this.state.longitude + '&key=' + this.state.BREZZO_API_KEY )
-        .then((response) => response.json())
-        .then(result => {
-
-          //Get weather condition
-          var weather_condition = result['data']['temperature']['value']+result['data']['temperature']['units']
-          
-          var relative_humidity = result['data']['relative_humidity']+"%"
-
-  
-          //Set State
-          this.setState({
-            weather_condition: weather_condition,
-            relative_humidity: relative_humidity,
-  
-          })
-  
-        }).catch((error) => {
-          console.log(error)
+        const res = await fetch(url).then(response => response.json());
+        const {
+          locality,
+          principalSubdivision,
+          countryName
+        } = res;
+        setLocation({
+          latitude,
+          longitude,
+          locality_info: `${locality} - ${principalSubdivision}, ${countryName}`
         });
-    }
+      }
+    );
+  }
 
+  const getWeatherCondition = async () => {
 
+    let url = `https://api.breezometer.com/weather/v1/current-conditions?lat=${location?.latitude}&lon=${location?.longitude}&key=${KEY}`;
 
+    const res = await fetch(url).then(response => response.json());
+    const { value, units } = res.data.temperature;
+    const { relative_humidity } = res.data;
 
-  render () {
-    const { navigate } = this.props.navigation; //Navigation Config
-    
-    return (
+    setWeather({
+      weather_condition: `${value} ${units}`,
+      relative_humidity
+    });
+  }
+
+  const getAirCondition = async () => {
+
+    let url = `https://api.breezometer.com/air-quality/v2/current-conditions?lat=${location?.latitude}&lon=${location?.longitude}&key=${KEY}&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true`
+    const res = await fetch(url).then(response => response.json());
+    console.log('res', res);
+    var location_key = Object.keys(res['data']['indexes']); //Get location key
+    var pollutants_key = Object.keys(res['data']['pollutants']);
+
+    var air_quality_number = res['data']['indexes'][location_key]['aqi']; //Get Air Quality AQI Indice
+    var category = res['data']['indexes'][location_key]['category']; //Get Air Quality Indice description
+    var health_recommendations = res['data']['health_recommendations']['general_population']; // Get 'General Population' Health Recommendations
+    var pollutants = res['data']['pollutants'][pollutants_key]['display_name'];
+    var pollutants_full_name = res['data']['pollutants'][pollutants_key]['full_name'];
+    var health_color = res['data']['indexes'][location_key]['color'];
+
+    setAir({
+      air_quality_number,
+      health_recommendations,
+      category,
+      pollutants,
+      pollutants_full_name,
+      health_color
+    })
+  }
+
+  return (
     <TemplateBase
-    header
-    title="Home"
-    rightAction={() => navigate('About')}
-    rightIcon={infoImg}>
-
-    <Container>
-      <TouchableOpacity onPress={()=> { this.getAirCondition(); this.getWeatherCondition();}}>
-      <Label variant="paragraph" strong color={this.state.health_color}>
-        {this.state.locality_info}
-      </Label>
-      </TouchableOpacity>
-
-      <Label variant="header" extraStrong color={this.state.health_color}>
-        {this.state.air_quality_number}
-      </Label>
-
-      <Label variant="title" strong color={this.state.health_color}>
-        {this.state.category}
-      </Label>
-
-      <ContainerInfo>
-        <Info>
-          <Label variant="paragraph" strong color="#30B9C4">
-            Temperatura{"\n"}
-            {this.state.weather_condition}
+      header
+      title="Home"
+      rightAction={() => navigation.navigate('About')}
+      rightIcon={infoImg} >
+      <Container>
+        <TouchableOpacity>
+          <Label variant="paragraph" strong color={air?.health_color}>
+            {location?.locality_info}
           </Label>
-        </Info>
-        <Info>
-          <Label variant="paragraph" strong color="#30B9C4">
-            Umidade do Ar{"\n"}
-            {this.state.relative_humidity}
-          </Label>
-        </Info>
-        <Info>
-          <Label variant="paragraph" strong color="#30B9C4">
-            Principal Poluente{"\n"}
-            {this.state.pollutants} ({this.state.pollutants_full_name})
-          </Label>
-        </Info>
-        
-      </ContainerInfo>
+        </TouchableOpacity>
 
-    </Container>
+        <Label variant="header" extraStrong color={air?.health_color}>
+          {air?.air_quality_number}
+        </Label>
 
-    <Moreinfo>
-      <Label strong color="#FFF">
-        Recomendações para o clima: {this.state.health_recommendations}
-      </Label>
-    </Moreinfo>
+        <Label variant="title" strong color={air?.health_color}>
+          {air?.category}
+        </Label>
 
-  </TemplateBase>
-    )}
-}
+        <ContainerInfo>
+          <Info style={{ gridArea: "temp" }} >
+            <Label variant="paragraph" strong color="#30B9C4">
+              Temperatura{"\n"}
+              {weather?.weather_condition}
+            </Label>
+          </Info>
+          <Info style={{ gridArea: "umi" }} >
+            <Label variant="paragraph" strong color="#30B9C4">
+              Umidade do Ar{"\n"}
+              {weather?.relative_humidity}
+            </Label>
+          </Info>
+          <Info style={{ gridArea: "pol" }}>
+            <Label variant="paragraph" strong color="#30B9C4">
+              Principal Poluente{"\n"}
+              {air?.pollutants} ({air?.pollutants_full_name})
+            </Label>
+          </Info>
+        </ContainerInfo>
+
+      </Container>
+
+      <Moreinfo>
+        <Label strong color="#FFF">
+          Recomendações para o clima: {air?.health_recommendations}
+        </Label>
+      </Moreinfo>
+
+    </TemplateBase>
+  )
+};
+
+
+
+export default Home;

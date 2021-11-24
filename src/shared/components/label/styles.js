@@ -3,13 +3,13 @@ import styled, { css } from 'styled-components/native';
 const getSize = (variant) => {
   switch (variant) {
     case 'header':
-      return 'font-size: 54px'
-    case 'title':
       return 'font-size: 40px'
+    case 'title':
+      return 'font-size: 32px'
     case 'subtitle':
       return 'font-size: 32px'
     case 'paragraph':
-      return 'font-size: 24px'
+      return 'font-size: 20px'
     case 'description':
       return 'font-size: 16px'
     default:
