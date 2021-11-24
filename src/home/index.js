@@ -105,18 +105,18 @@ const Home = ({ navigation }) => {
       rightIcon={infoImg} >
       <Container>
         <TouchableOpacity>
-          <Label variant="paragraph" strong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
+          <Label variant="paragraph" strong color={air?.health_color == "#FFFF00" ? "#FED900" : air?.health_color}>
             <Icon name={"location-arrow"} fontSize={"18"} />{" "}
 
             {location?.locality_info}
           </Label>
         </TouchableOpacity>
 
-        <Label variant="header" extraStrong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
+        <Label variant="header" extraStrong color={air?.health_color == "#FFFF00" ? "#FED900": air?.health_color}>
           {air?.air_quality_number}
         </Label>
 
-        <Label variant="title" strong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
+        <Label variant="title" strong color={air?.health_color == "#FFFF00" ? "#FED900" : air?.health_color}>
           {air?.category}
         </Label>
 
