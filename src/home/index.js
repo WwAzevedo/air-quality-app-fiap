@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/FontAwesome5";
 
 import { Container, Moreinfo, Info, ContainerInfo } from "./styles";
 
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, SafeAreaView } from "react-native";
 
 import Label from "../shared/components/label";
 
@@ -14,6 +14,7 @@ import { getAirCondition } from "./api/air-condition";
 import TemplateBase from "../shared/templates/base";
 
 import { useNavigation } from "@react-navigation/native";
+
 const infoImg = require("../../assets/info.svg");
 
 // const Home = ({ navigation }) => {
@@ -189,73 +190,78 @@ export default class App extends React.Component {
     const { navigate } = this.props.navigation; //Navigation Config
 
     return (
-      <TemplateBase
-        header
-        title="Home"
-        rightAction={() => navigate("About")}
-        rightIcon={infoImg}
-      >
-        <Container>
-          <TouchableOpacity
-            onPress={() => {
-              this.getAirCondition();
-              this.getWeatherCondition();
-            }}
-          >
+      <SafeAreaView>
+        <TemplateBase
+          header
+          title="Home"
+          rightAction={() => navigate("About")}
+          rightIcon={infoImg}
+        >
+
+          <Container>
+            
+            <TouchableOpacity
+              onPress={() => {
+                this.getAirCondition();
+                this.getWeatherCondition();
+              }}
+            >
+              <Label
+                variant="paragraph"
+                strong
+                color={this.state.health_color == "#FFFF00" ? "#FED900" : "#000" }
+              >
+                <Icon name={"location-arrow"} fontSize={"18"} />{" "}
+                {this.state.locality_info}
+              </Label>
+            </TouchableOpacity>
+
             <Label
-              variant="paragraph"
+              variant="header"
+              extraStrong
+              color={this.state.health_color == "#FFFF00" ? "#FED900" : "#000" }
+            >
+              {this.state.air_quality_number}
+            </Label>
+
+            <Label
+              variant="title"
               strong
               color={this.state.health_color == "#FFFF00" ? "#FED900" : "#000"}
             >
-              <Icon name="location-arrow" fontSize="18" />{" "}
-              {this.state.locality_info}
+              {this.state.category}
             </Label>
-          </TouchableOpacity>
 
-          <Label
-            variant="header"
-            extraStrong
-            color={this.state.health_color == "#FFFF00" ? "#FED900" : "#000"}
-          >
-            {this.state.air_quality_number}
-          </Label>
+            <ContainerInfo>
+              <Info>
+                <Label variant="paragraph" strong color={"#30B9C4"}>
+                  Temperatura{"\n"}
+                  {this.state.weather_condition}
+                </Label>
+              </Info>
+              <Info>
+                <Label variant="paragraph" strong color={"#30B9C4"}>
+                  Umidade do Ar{"\n"}
+                  {this.state.relative_humidity}
+                </Label>
+              </Info>
+              <Info>
+                <Label variant="paragraph" strong color={"#30B9C4"}>
+                  Principal Poluente{"\n"}
+                  {this.state.pollutants} ({this.state.pollutants_full_name})
+                </Label>
+              </Info>
+            </ContainerInfo>
+          </Container>
 
-          <Label
-            variant="title"
-            strong
-            color={this.state.health_color == "#FFFF00" ? "#FED900" : "#000"}
-          >
-            {this.state.category}
-          </Label>
+          <Moreinfo>
+            <Label strong color={"#FFF"}>
+              Recomendações para o clima: {this.state.health_recommendations}
+            </Label>
+          </Moreinfo>
 
-          <ContainerInfo>
-            <Info>
-              <Label variant="paragraph" strong color={"#30B9C4"}>
-                Temperatura{"\n"}
-                {this.state.weather_condition}
-              </Label>
-            </Info>
-            <Info>
-              <Label variant="paragraph" strong color={"#30B9C4"}>
-                Umidade do Ar{"\n"}
-                {this.state.relative_humidity}
-              </Label>
-            </Info>
-            <Info>
-              <Label variant="paragraph" strong color={"#30B9C4"}>
-                Principal Poluente{"\n"}
-                {this.state.pollutants} ({this.state.pollutants_full_name})
-              </Label>
-            </Info>
-          </ContainerInfo>
-        </Container>
-
-        <Moreinfo>
-          <Label strong color={"#FFF"}>
-            Recomendações para o clima: {this.state.health_recommendations}
-          </Label>
-        </Moreinfo>
-      </TemplateBase>
+        </TemplateBase>
+      </SafeAreaView>
     );
   }
 }
