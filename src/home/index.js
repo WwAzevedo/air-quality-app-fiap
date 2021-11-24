@@ -1,5 +1,6 @@
 import React from 'react';
 import * as Location from 'expo-location';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import {
   Container,
@@ -67,7 +68,6 @@ export default class App extends React.Component {
       // Health Color
       health_color: "",
     }
-
 
   }
 
@@ -191,19 +191,21 @@ export default class App extends React.Component {
     rightIcon={infoImg}>
 
     <Container>
-      <TouchableOpacity onPress={()=> { this.getAirCondition(); this.getWeatherCondition();}}>
-      <Label variant="paragraph" strong color={this.state.health_color}>
-        {this.state.locality_info}
-      </Label>
-      </TouchableOpacity>
 
-      <Label variant="header" extraStrong color={this.state.health_color}>
-        {this.state.air_quality_number}
-      </Label>
+        <TouchableOpacity onPress={()=> { this.getAirCondition(); this.getWeatherCondition();}}>
+        <Label variant="paragraph" strong color={this.state.health_color == '#FFFF00' ? '#FED900' : '' }>
+          <Icon name='location-arrow' size='18' /> {this.state.locality_info}
+        </Label>
+        </TouchableOpacity>
 
-      <Label variant="title" strong color={this.state.health_color}>
-        {this.state.category}
-      </Label>
+        <Label variant="header" extraStrong color={this.state.health_color == '#FFFF00' ? '#FED900' : ''}>
+          {this.state.air_quality_number}
+        </Label>
+
+        <Label variant="title" strong color={this.state.health_color == '#FFFF00' ? '#FED900' : ''}>
+          {this.state.category}
+        </Label>
+
 
       <ContainerInfo>
         <Info>
