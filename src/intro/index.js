@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 
 import TemplateBase from '../shared/templates/base';
+import {
+  Image
+} from 'react-native';
 
 import {
   Container
 } from './styles';
 
-import Label from '../shared/components/label';
+const logoImg = require("../../assets/logo.png");
+
 
 const Intro = ({ navigation }) => {
 
@@ -19,12 +23,11 @@ const Intro = ({ navigation }) => {
   return (
     <TemplateBase>
       <Container>
-        <Label variant="header" color="#FFF">
-          AirFresh
-        </Label>
-        <Label color="#FFF">
-          Quality Air Informations
-        </Label>
+
+      <Image
+        style={{ width: 202, height: 140 }}
+        source={logoImg} />
+       
       </Container>
     </TemplateBase>
   )

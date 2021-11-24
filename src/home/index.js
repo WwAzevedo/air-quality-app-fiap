@@ -86,7 +86,7 @@ const Home = ({ navigation }) => {
   };
 
   return (
-    <SafeAreaView>
+    // <SafeAreaView>
       <TemplateBase
         header
         title="Home"
@@ -137,7 +137,7 @@ const Home = ({ navigation }) => {
           </Label>
         </Moreinfo>
       </TemplateBase>
-    </SafeAreaView>
+    //</SafeAreaView>
   );
 };
 
