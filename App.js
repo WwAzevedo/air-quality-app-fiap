@@ -1,17 +1,16 @@
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import * as Location from 'expo-location';
-import About from './src/about';
-import Home from './src/home';
-import Intro from './src/intro';
+import React from "react";
+import { StyleSheet } from "react-native";
+import * as Location from "expo-location";
+import About from "./src/about";
+import Home from "./src/home";
+import Intro from "./src/intro";
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 
 export default class App extends React.Component {
-
   // // Constructor init
   // constructor(props) {
   //   super(props);
@@ -25,7 +24,6 @@ export default class App extends React.Component {
   //     category: "",
   //     pollutants: "",
   //     pollutants_full_name: "",
-
 
   //     //User Latitude and Longitude
   //     latitude: "",
@@ -75,7 +73,7 @@ export default class App extends React.Component {
   // getGeoLocation() {
   //   Location.installWebGeolocationPolyfill()
 
-  //   //Get Latitude and Longitude 
+  //   //Get Latitude and Longitude
   //   return navigator.geolocation.getCurrentPosition(
 
   //     //Will give you the current location
@@ -116,7 +114,6 @@ export default class App extends React.Component {
   //   );
   // }
 
-
   // Screen Render
   render() {
     return (
@@ -153,7 +150,7 @@ export default class App extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: "#fff"
     // alignItems: 'center',
     // justifyContent: 'center',
   },
@@ -161,6 +158,6 @@ const styles = StyleSheet.create({
     fontSize: 28
   },
   container1: {
-    backgroundColor: '#fff',
-  },
+    backgroundColor: "#fff"
+  }
 });
