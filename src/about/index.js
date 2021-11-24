@@ -25,8 +25,8 @@ const team = [
     rm: "84426"
   },
   {
-    name: "João",
-    rm: "?"
+    name: "João Ricardi",
+    rm: "85061"
   },
 ];
 
@@ -40,7 +40,7 @@ const About = ({ navigation }) => (
     <Container>
 
       <Label variant="description" color="#30B9C4" strong>
-        AirFresh App, aplication.
+        AirFresh App, application.
       </Label>
 
       <br />

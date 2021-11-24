@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import * as Location from 'expo-location';
+import React, { useEffect, useState } from "react";
+import * as Location from "expo-location";
+import Icon from "react-native-vector-icons/FontAwesome5";
 
-import {
-  Container,
-  Moreinfo,
-  Info,
-  ContainerInfo
-} from './styles';
+import { Container, Moreinfo, Info, ContainerInfo } from "./styles";
 
-import {
-  TouchableOpacity
-} from 'react-native';
+import { TouchableOpacity } from "react-native";
 
-import Label from '../shared/components/label';
+import Label from "../shared/components/label";
 
 import TemplateBase from '../shared/templates/base';
 
@@ -111,34 +105,36 @@ const Home = ({ navigation }) => {
       rightIcon={infoImg} >
       <Container>
         <TouchableOpacity>
-          <Label variant="paragraph" strong color={air?.health_color}>
+          <Label variant="paragraph" strong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
+            <Icon name={"location-arrow"} fontSize={"18"} />{" "}
+
             {location?.locality_info}
           </Label>
         </TouchableOpacity>
 
-        <Label variant="header" extraStrong color={air?.health_color}>
+        <Label variant="header" extraStrong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
           {air?.air_quality_number}
         </Label>
 
-        <Label variant="title" strong color={air?.health_color}>
+        <Label variant="title" strong color={air?.health_color == "#FFFF00" ? "#FED900" : "#000"}>
           {air?.category}
         </Label>
 
         <ContainerInfo>
           <Info style={{ gridArea: "temp" }} >
-            <Label variant="paragraph" strong color="#30B9C4">
+            <Label variant="paragraph" strong color={"#30B9C4"}>
               Temperatura{"\n"}
               {weather?.weather_condition}
             </Label>
           </Info>
           <Info style={{ gridArea: "umi" }} >
-            <Label variant="paragraph" strong color="#30B9C4">
+            <Label variant="paragraph" strong color={"#30B9C4"}>
               Umidade do Ar{"\n"}
               {weather?.relative_humidity}
             </Label>
           </Info>
           <Info style={{ gridArea: "pol" }}>
-            <Label variant="paragraph" strong color="#30B9C4">
+            <Label variant="paragraph" strong color={"#30B9C4"}>
               Principal Poluente{"\n"}
               {air?.pollutants} ({air?.pollutants_full_name})
             </Label>
