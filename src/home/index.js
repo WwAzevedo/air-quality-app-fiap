@@ -5,14 +5,19 @@ import { Container, Moreinfo, Info, ContainerInfo } from "./styles";
 import { TouchableOpacity, SafeAreaView } from "react-native";
 import Label from "../shared/components/label";
 import TemplateBase from "../shared/templates/base";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_KEY } from '@env';
 
 const infoImg = require("../../assets/info.svg");
 
 const Home = ({ navigation }) => {
+
+  const KEY = API_KEY;
+
   const [weather, setWeather] = useState();
-  const [air, setAir] = useState();
+  const [air, setAir] = useState(null);
   const [location, setLocation] = useState(null);
-  const KEY = "496bfcfb6ddd40ef831e29858c8ba7a9";
+  const [last_measurement, setLastMeasurement] = useState(null);
 
   useEffect(() => {
     getGeoLocation();
@@ -24,28 +29,40 @@ const Home = ({ navigation }) => {
       getAirCondition();
     }
   }, [location]);
+  
+  useEffect(() => {
+    if (air) {
+      storeLastMeasurement();
+      getLastMeasurement();
+    }
+  }, [air]);
+
 
   const getGeoLocation = () => {
+
     Location.installWebGeolocationPolyfill();
 
     return navigator.geolocation.getCurrentPosition(async (position) => {
-      let longitude = JSON.stringify(position.coords.longitude);
 
+      let longitude = JSON.stringify(position.coords.longitude);
       let latitude = JSON.stringify(position.coords.latitude);
 
       let url = `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=pt-br`;
 
       const res = await fetch(url).then((response) => response.json());
       const { locality, principalSubdivision, countryName } = res;
+
       setLocation({
         latitude,
         longitude,
         locality_info: `${locality} - ${principalSubdivision}, ${countryName}`
       });
+
     });
   };
 
   const getWeatherCondition = async () => {
+
     let url = `https://api.breezometer.com/weather/v1/current-conditions?lat=${location?.latitude}&lon=${location?.longitude}&key=${KEY}`;
 
     const res = await fetch(url).then((response) => response.json());
@@ -56,12 +73,14 @@ const Home = ({ navigation }) => {
       weather_condition: `${value} ${units}`,
       relative_humidity
     });
+
   };
 
   const getAirCondition = async () => {
+
     let url = `https://api.breezometer.com/air-quality/v2/current-conditions?lat=${location?.latitude}&lon=${location?.longitude}&key=${KEY}&features=local_aqi,health_recommendations,dominant_pollutant_concentrations&metadata=true`;
     const res = await fetch(url).then((response) => response.json());
-    console.log("res", res);
+
     var location_key = Object.keys(res["data"]["indexes"]); //Get location key
     var pollutants_key = Object.keys(res["data"]["pollutants"]);
 
@@ -83,13 +102,45 @@ const Home = ({ navigation }) => {
       pollutants_full_name: pollutants_full_name.split(" ")[0],
       health_color: health_color == "#FFFF00" ? "#FED900" : health_color
     });
+
   };
 
+  // store last measurement
+  const storeLastMeasurement = async () => {
+
+    const infos = {
+      number: air?.air_quality_number,
+      category: air?.category,
+      locality: location?.locality_info
+    };
+
+    try {
+      await AsyncStorage.setItem("@last_Measurement", JSON.stringify(infos))
+    } catch (e) {
+      console.log('error record storage');
+    }
+  };
+
+  // get last measurement
+  const getLastMeasurement = async (value) => {
+    try {
+      const value = await AsyncStorage.getItem('@last_Measurement');
+      if(value !== null) {
+        setLastMeasurement({
+          last_info: JSON.parse(value)
+        });
+      }
+    } catch (e) {
+      console.log('error read storage');
+    }
+  };
+
+
   return (
-    // <SafeAreaView>
+    //<SafeAreaView>
       <TemplateBase
         header
-        title="Home"
+        title="Air Fresh"
         rightAction={() => navigation.navigate("About")}
         rightIcon={infoImg}
       >
@@ -126,6 +177,13 @@ const Home = ({ navigation }) => {
               <Label variant="paragraph" strong color={"#30B9C4"}>
                 Principal Poluente{"\n"}
                 {air?.pollutants} ({air?.pollutants_full_name})
+              </Label>
+            </Info>
+            <Info style={{ gridArea: "pol" }}>
+              <Label variant="paragraph" strong color={"#30B9C4"}>
+                Última Medição{"\n"}
+                {last_measurement?.last_info?.category}{"\n"}
+                {last_measurement?.last_info?.locality}
               </Label>
             </Info>
           </ContainerInfo>

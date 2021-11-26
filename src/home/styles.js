@@ -31,7 +31,7 @@ export const ContainerInfo = styled.View`
 
 export const Info = styled.View`
   background-color: white;
-  height: 70px;
+  min-height: 80px;
   border-radius: 8px;
   display: flex;
   justify-content: center;
