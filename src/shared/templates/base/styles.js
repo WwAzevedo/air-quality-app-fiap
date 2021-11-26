@@ -1,6 +1,6 @@
 import styled from 'styled-components/native';
 
 export const Container = styled.View`
-    height: 100%;
-    overflow: hidden;
+    min-height: 100%;
+    overflow-y:scroll
 `;
