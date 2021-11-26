@@ -34,19 +34,19 @@ const About = ({ navigation }) => (
   <TemplateBase
     header
     backButton
-    title="Sobre o app"
+    title="Sobre o Air Fresh"
     leftAction={() => navigation.navigate('Home')}>
 
     <Container>
 
       <Label variant="description" color="#30B9C4" strong>
-        AirFresh App, aplicativo para descobrir como está a qualidade do ar e umidade da sua localização.
+        AirFresh App, aplicativo para descobrir como está a qualidade do ar, temperatura e umidade da sua localização.
       </Label>
 
       <br />
 
       <Label variant="description" color="#30B9C4" strong>
-        Equipe
+        Equipe: {"\n \n"}
       </Label>
       {
         team.map(({ name, rm }) => (
