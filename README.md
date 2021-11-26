@@ -10,6 +10,8 @@ Quality Air Informations
 
 - Pitch: https://youtu.be/5mK2RKCdDkA
 
+- Demo: https://gifted-engelbart-2e656e.netlify.app/
+
 ### Requirements
 
 - expo-cli
