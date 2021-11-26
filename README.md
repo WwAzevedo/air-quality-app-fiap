@@ -8,6 +8,8 @@ Quality Air Informations
 
 - Slide FIGMA: https://www.figma.com/file/PttU5jTZ0eQGZScoGDZDLe/AirFresh?nodeid=0%3A1
 
+- Pitch: https://youtu.be/5mK2RKCdDkA
+
 ### Requirements
 
 - expo-cli
