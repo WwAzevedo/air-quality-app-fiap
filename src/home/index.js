@@ -137,7 +137,7 @@ const Home = ({ navigation }) => {
 
 
   return (
-    //<SafeAreaView>
+    <SafeAreaView style={{flex: 1}}>
       <TemplateBase
         header
         title="Air Fresh"
@@ -195,7 +195,7 @@ const Home = ({ navigation }) => {
           </Label>
         </Moreinfo>
       </TemplateBase>
-    //</SafeAreaView>
+    </SafeAreaView>
   );
 };
 

@@ -23,11 +23,7 @@ const team = [
   {
     name: "Danilo Caetano",
     rm: "84426"
-  },
-  {
-    name: "João Ricardi",
-    rm: "85061"
-  },
+  }
 ];
 
 const About = ({ navigation }) => (
