@@ -12,12 +12,8 @@ export const Container = styled.View`
 `;
 
 export const Moreinfo = styled.View`
-  border-top-left-radius: 8px;
-  border-top-right-radius: 8px;
+  border-radius: 8px;
   padding: 16px;
-  margin: 0 16px;
-  height: 50%;
-  flex: 1;
   background-color: #30B9C4;
 `;
 

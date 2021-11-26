@@ -152,15 +152,15 @@ const Home = ({ navigation }) => {
             </Label>
           </TouchableOpacity>
 
-          <Label variant="header" extraStrong color={air?.health_color}>
-            {air?.air_quality_number}
-          </Label>
-
-          <Label variant="title" strong color={air?.health_color}>
-            {air?.category}
-          </Label>
-
           <ContainerInfo>
+          <Info style={{ gridArea: "temp" }}>
+            <Label variant="title" strong color={air?.health_color}>
+              {air?.category}
+            </Label>
+            <Label variant="header" extraStrong color={air?.health_color}>
+              {air?.air_quality_number}
+            </Label>
+          </Info>
             <Info style={{ gridArea: "temp" }}>
               <Label variant="paragraph" strong color={"#30B9C4"}>
                 Temperatura{"\n"}
@@ -186,14 +186,14 @@ const Home = ({ navigation }) => {
                 {last_measurement?.last_info?.locality}
               </Label>
             </Info>
+          <Moreinfo>
+            <Label strong color="#FFF">
+              Recomendações para o clima: {air?.health_recommendations}
+            </Label>
+          </Moreinfo>
           </ContainerInfo>
         </Container>
 
-        <Moreinfo>
-          <Label strong color="#FFF">
-            Recomendações para o clima: {air?.health_recommendations}
-          </Label>
-        </Moreinfo>
       </TemplateBase>
     </SafeAreaView>
   );
